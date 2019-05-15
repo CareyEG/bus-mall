@@ -63,7 +63,7 @@ function showARandomMall(imageElement){
   // increment time shown
   mallArray[randomIndex].timesShown++;
 
-  while(randomIndexArray.length > 4){
+  while(randomIndexArray.length > 6){
     randomIndexArray.pop();
   }
   
