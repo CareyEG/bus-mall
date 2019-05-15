@@ -13,6 +13,25 @@ var namesArray = [];
 var votesArray = [];
 var productChart;
 
+//if statement is if things are stored
+
+if (localStorage.getItem('names')){
+
+  // gimme them goods
+  var retrievedNames = localStorage.getItem('names');
+  console.log('retrieved these goodies ' + retrievedNames);
+
+  var parsedNames = JSON.parse(retrievedNames);
+  console.log('parsed this stuff ' , parsedNames);
+
+  // this is for the end result of local storage stuff
+  mallArray = parsedNames;
+
+} else {
+
+  allTheGoodies();
+}
+
 // Constructor
 function MallPicture(name){
   this.name = name;
@@ -23,27 +42,28 @@ function MallPicture(name){
 }
 
 // Instances
-new MallPicture('bag');
-new MallPicture('banana');
-new MallPicture('bathroom');
-new MallPicture('boots');
-new MallPicture('breakfast');
-new MallPicture('bubblegum');
-new MallPicture('chair');
-new MallPicture('cthulhu');
-new MallPicture('dog-duck');
-new MallPicture('dragon');
-new MallPicture('pen');
-new MallPicture('pet-sweep');
-new MallPicture('scissors');
-new MallPicture('shark');
-new MallPicture('sweep');
-new MallPicture('tauntaun');
-new MallPicture('unicorn');
-new MallPicture('usb');
-new MallPicture('water-can');
-new MallPicture('wine-glass');
-
+function allTheGoodies(){
+  new MallPicture('bag');
+  new MallPicture('banana');
+  new MallPicture('bathroom');
+  new MallPicture('boots');
+  new MallPicture('breakfast');
+  new MallPicture('bubblegum');
+  new MallPicture('chair');
+  new MallPicture('cthulhu');
+  new MallPicture('dog-duck');
+  new MallPicture('dragon');
+  new MallPicture('pen');
+  new MallPicture('pet-sweep');
+  new MallPicture('scissors');
+  new MallPicture('shark');
+  new MallPicture('sweep');
+  new MallPicture('tauntaun');
+  new MallPicture('unicorn');
+  new MallPicture('usb');
+  new MallPicture('water-can');
+  new MallPicture('wine-glass');
+}
 
 
 // Show a random product
@@ -113,6 +133,11 @@ function handleMallClick(event){
   showARandomMall(mallpicTwo);
   showARandomMall(mallpicThree);
 
+  var stringifiedNames = JSON.stringify(mallArray);
+  
+  localStorage.setItem('names', stringifiedNames);
+  console.log('the data stored is ' + stringifiedNames);
+
 }
 
 // Stuff that runs on page load
@@ -129,6 +154,12 @@ showARandomMall(mallpicThree);
 // Charts rendered using Chart JS v.2.7.2
 // http://www.chartjs.org/
 // ++++++++++++++++++++++++++++++++++++++++++++
+
+
+  
+
+
+
 
 
 
