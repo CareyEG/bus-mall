@@ -8,7 +8,10 @@ var containerElement = document.getElementById('container');
 var mallArray = [];
 var votesRemaining = 25;
 var randomIndexArray = [];
-var chartDrawn = false;
+var chartDrawn;
+var namesArray = [];
+var votesArray = [];
+var productChart;
 
 // Constructor
 function MallPicture(name){
@@ -80,12 +83,19 @@ function renderResults(){
   }
 }
 
+function assignedChartData(){
+  for(var i = 0; i < mallArray.length; i++){
+    namesArray[i] = mallArray[i].name;
+    votesArray[i] = mallArray[i].votes;
+  }
+}
 // Event handler
 function handleMallClick(event){
   votesRemaining--;
 
   if(votesRemaining === 0){
-    renderResults();
+    assignedChartData();
+    drawChart();
     containerElement.removeEventListener('click', handleMallClick);
   }
 
@@ -106,7 +116,6 @@ function handleMallClick(event){
 }
 
 // Stuff that runs on page load
-containerElement.addEventListener('click', handleMallClick);
 // Show the first product
 showARandomMall(mallpic);
 showARandomMall(mallpicTwo);
@@ -117,8 +126,61 @@ showARandomMall(mallpicThree);
 
 // ++++++++++++++++++++++++++++++++++++++++++++
 // CHART STUFF
-// Charts rendered using Chart JS v.2.8.0
+// Charts rendered using Chart JS v.2.7.2
 // http://www.chartjs.org/
 // ++++++++++++++++++++++++++++++++++++++++++++
 
-// Arrays to hold data for the chart
+
+
+var data = {
+  labels: namesArray, // titles array we declared earlier
+  datasets: [{
+    label:'Totalities',
+    data: votesArray, // votes array we declared earlier
+    backgroundColor: [
+      'bisque',
+      'darkgray',
+      'burlywood',
+      'lightblue',
+      'navy'
+    ],
+    hoverBackgroundColor: [
+      'purple',
+      'purple',
+      'purple',
+      'purple',
+      'purple'
+    ],
+  }],
+};
+
+function drawChart() {
+  var ctx = document.getElementById('my-chart').getContext('2d');
+  productChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false,
+      animation: {
+        duration: 2000,
+        easing: 'easeOutBounce',
+      },
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 10,
+          min: 0,
+          stepSize: 1.0,
+        },
+      }],
+    },
+  });
+  chartDrawn = true;
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++
+// EVENT LISTENERS
+// ++++++++++++++++++++++++++++++++++++++++++++
+containerElement.addEventListener('click', handleMallClick);
+
